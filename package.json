@@ -1,0 +1,24 @@
+{
+  "name": "gadgetsnode",
+  "version": "1.0.0",
+  "description": "fetch gadgets",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "start": "node main.js"
+  },
+  "keywords": [
+    "latest",
+    "prodcuts",
+    "from",
+    "gadegets360.com"
+  ],
+  "author": "Vinayak Anvekar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "jsdom": "^26.1.0",
+    "node-fetch": "^3.3.2"
+  }
+}
