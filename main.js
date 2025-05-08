@@ -65,11 +65,52 @@ async function fetchUrl(url) {
 
 async function fetchGadgets360(query) {
     const starttime = Date.now();
-    const response = await fetch(`https://gadgets360.com/search?searchtext=${query}`);
-    const text = await response.text();
-    const dom = new JSDOM(text);
-    const document = dom.window.document;
-    const results = [];
+    let text = '';
+    let dom = new JSDOM(text);
+    let document = dom.window.document;
+    let results = [];
+   await fetch(`https://gadgets360.com/search?searchtext=${query}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    
+       let fetHTML =   (async () => {
+          const t = await response.text();
+           let text =t
+          dom = new JSDOM(text);
+          document = dom.window.document;
+
+
+            await Promise.all(Array.from(document.querySelectorAll('div.rvw-imgbox'))
+            .map(item => extractResults(item))).then(data => { console.log(data); 
+                 return data;
+      
+                }).catch(error => {
+                  console.error('Fetch error:', error);
+                  return { error: true, error_message: error.message };
+                });
+
+            
+        });
+        return fetHTML();
+        // fetHTML().then(data => { console.log(data); 
+        //   return data;
+
+        // });
+        
+
+
+    })
+    .then(data => { console.log(data); 
+
+
+
+     } )
+    .catch(error => {
+      console.error('Fetch error:', error);
+    });
+   
 
     async function extractResults(item) {
         const title = await item.querySelector('img').title;
@@ -156,10 +197,10 @@ async function fetchGadgets360(query) {
 
         await Promise.all(Array.from(reqProduct).map(fpInReq));
         results.push(jsun);
+        return results;
     }
 
-    await Promise.all(Array.from(document.querySelectorAll('div.rvw-imgbox')).map(item => extractResults(item)));
-    console.log(Date.now() - starttime);
+    
     return results;
 }
 
