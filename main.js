@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cors from 'cors';
 import { tidy } from 'htmltidy2';
-
+import pLimit from 'p-limit';
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -194,8 +194,11 @@ async function fetchGadgets360(query) {
             if (!ty) return;
             jsun[ty.textContent] = ty.nextElementSibling.textContent;
         }
-
-        await Promise.all(Array.from(reqProduct).map(fpInReq));
+        const limit = pLimit(10); // Set concurrency limit to 10
+        const tasks =   Array.from(reqProduct).map(item => 
+          limit(() => fpInReq(item))
+        );
+        await Promise.all(tasks);
         results.push(jsun);
         return results;
     }
@@ -249,7 +252,7 @@ app.get('/gadgetsnow/:query', async (req, res) => {
 
 app.get('/gadgets360/:query', async (req, res) => {
     const results = await fetchGadgets360(req.params.query);
-
+   
 
     res.json(results);
 });
