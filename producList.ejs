@@ -1,0 +1,22 @@
+<ul class="slider slide1 prc-slider">
+    <% items.forEach(function(item) { %>
+      <li>
+        <div class="pd-img-wrp">
+          <a target="_blank" href="<%= item.linkClick1 %>">
+            <img src="<%= item.imgSrc %>" alt="">
+          </a>
+        </div>
+        <div class="pd-dtl">
+          <a target="_blank" href="<%= item.linkClick2 %>" class="pditem-txt">
+            <%= item.name %>
+          </a>
+          <span class="price-txt"><%= item.price %></span>
+          <div class="pd-cashback"></div>
+          <a target="_blank" href="<%= item.linkClick4 %>" class="splr-txt">
+            <%= item.seller %>
+          </a>
+        </div>
+      </li>
+    <% }); %>
+  </ul>
+  
