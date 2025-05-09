@@ -209,7 +209,8 @@ async function fetchGadgets360(query) {
 
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:5000', 'http://localhost:8081',
    'https://bb6f6125-db9c-4152-b500-ee566806723b.e1-us-east-azure.choreoapps.dev',
-   'https://ea24beef-ae35-447d-8351-92e96e289f12.e1-us-east-azure.choreoapps.dev'
+   'https://ea24beef-ae35-447d-8351-92e96e289f12.e1-us-east-azure.choreoapps.dev',
+   'https://23f24711-ee18-4810-935b-61f010c33bec.e1-us-east-azure.choreoapps.dev'
 ];
 
 app.use(cors({
